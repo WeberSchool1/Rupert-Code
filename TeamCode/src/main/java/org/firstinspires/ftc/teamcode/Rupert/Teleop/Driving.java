@@ -32,42 +32,73 @@ public class Driving extends LinearOpMode {
                                -gamepad1.right_stick_y,
                                -gamepad1.right_stick_x),
                        -gamepad1.left_stick_x));
-               rup.SampleDetect(1);
-               if(gamepad1.a)
-               {
-                   rup.StartingPosition();
+               //Manual Mode
+               if(gamepad1.start) {
+                   while(opModeIsActive()){
+                   if (gamepad1.a) {
+                       rup.StartingPosition();
+                   }
+                   if (gamepad1.b) {
+                       rup.GrabbingSamples90();
+                   }
+                   if (gamepad1.x) {
+                       rup.GrabbingSamples180();
+                   }
+                   if (gamepad1.y) {
+                       rup.GrabbingSamples();
+                       rup.delay(.1);
+                       rup.StartingPosition();
+                   }
+                   if (gamepad1.left_bumper) {
+                       rup.setintakeSlidesPower(-1);
+                   } else if (gamepad1.right_bumper) {
+                       rup.setintakeSlidesPower(1);
+                   } else {
+                       rup.setintakeSlidesPower(0);
+                   }
+                   if (gamepad2.a) {
+                       rup.ScoringSamples();
+                   }
+                   if (gamepad2.right_bumper) {
+                       rup.HangingUp();
+                   }
+                   if (gamepad2.left_bumper) {
+                       rup.HangingDown();
+                   }
+                   if(gamepad1.options){
+                       break;
+                   }
+                   }
                }
-                if(gamepad1.b)
-                {
-                    rup.GrabbingSamples90();
-                }
-               if(gamepad1.x)
-               {
-                   rup.GrabbingSamples180();
+               //automatic mode
+               if(gamepad1.options){
+                   while(opModeIsActive()){
+                       if(gamepad1.a)
+                       {
+                        rup.setLimelight(1);
+
+                       }
+                       if(gamepad1.x)
+                       {
+                           rup.setLimelight(2);
+                       }
+                       if(gamepad1.b)
+                       {
+                           rup.setLimelight(3);
+                       }
+
+                   if (gamepad2.a) {
+                       rup.ScoringSamples();
+                   }
+                   if (gamepad2.right_bumper) {
+                       rup.HangingUp();
+                   }
+                   if (gamepad2.left_bumper) {
+                       rup.HangingDown();
+                   }
+                   }
                }
-               if(gamepad1.y)
-               {
-                   rup.GrabbingSamples();
-                   rup.delay(.1);
-                   rup.StartingPosition();
-               }
-               if(gamepad1.left_bumper)
-               {
-                   rup.setintakeSlidesPower(-1);
-               }else if(gamepad1.right_bumper)
-               {
-                   rup.setintakeSlidesPower(1);
-               }else{
-                   rup.setintakeSlidesPower(0);
-               }
-               if(gamepad2.right_bumper)
-               {
-                   rup.HangingUp();
-               }
-               if(gamepad2.left_bumper)
-               {
-                   rup.HangingDown();
-               }
+
   
             }
         }
