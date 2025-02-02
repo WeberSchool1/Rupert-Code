@@ -30,6 +30,7 @@ public class Rupert {
     // Servos
     private Servo intakeClaw, intakeDiffLeft, intakeDiffRight, intakeRotate;
     private Servo outtakeClaw, outtakeRotate, outtakev4b;
+    private Servo rgbLeft, rgbRight;
 
     // Sensors
     private TouchSensor subSensorLeft, subSensorRight;
@@ -56,24 +57,138 @@ public class Rupert {
     private double outtakeClawPos;
     private double outtakeRotatePos;
 
+
     public Rupert(HardwareMap hwMap) {
         // Initialize Pose2d
         this.pose = new Pose2d(0, 0, 0);
 
         // Initialize Limelight
-        this.limelight = hwMap.get(Limelight3A.class, "limelight");
-
-        // Initialize Vision Portal
-        CameraName camera = hwMap.get(CameraName.class, "Webcam 1");
-        visionPortal = new VisionPortal.Builder()
-                .setCamera(camera)
-                .build();
+        this.limelight = hwMap.get(Limelight3A.class, "Limelight");
 
         // Initialize Mecanum Drive
         this.drive = new MecanumDrive(hwMap, pose);
+        // Motors
+        intakeSlides = hwMap.dcMotor.get("intakeSlides");
+        intakeSlides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
+        outtakeLeftSlides = hwMap.dcMotor.get("outtakeLeftSlides");
+        outtakeLeftSlides.setTargetPosition(0);
+        outtakeLeftSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeLeftSlides.setPower(1);
+
+        outtakeRightSlides = hwMap.dcMotor.get("outtakeRightSlides");
+        outtakeRightSlides.setTargetPosition(0);
+        outtakeRightSlides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        outtakeRightSlides.setDirection(DcMotorSimple.Direction.REVERSE);
+        outtakeRightSlides.setPower(1);
+
+        // Servos
+        //intake
+        intakeClaw = hwMap.servo.get("intakeGrabber");
+        intakeClaw.setPosition(intakeClawPos);
+
+        intakeDiffLeft = hwMap.servo.get("intakeLeftDiff");
+        intakeDiffLeft.setPosition(intakeDiffPos);
+
+        intakeDiffRight = hwMap.servo.get("intakeRightDiff");
+        intakeDiffRight.setPosition(intakeDiffPos);
+
+        intakeRotate = hwMap.servo.get("intakeV4b");
+        intakeRotate.setPosition(intakeRotationPos);
+        //outtake
+        outtakeClaw = hwMap.servo.get("outtakeClaw");
+        outtakeClaw.setPosition(outtakeClawPos);
+
+        outtakeRotate = hwMap.servo.get("outtakeRotate");
+        outtakeRotate.setPosition(outtakeRotatePos);
+
+        outtakev4b= hwMap.servo.get("outtakeV4b");
+        outtakev4b.setDirection(Servo.Direction.REVERSE);
+        outtakev4b.setPosition(outtakeRotatePos);
+
+        // Touch Sensors
+        subSensorLeft = hwMap.touchSensor.get("subSensorLeft");
+        subSensorRight = hwMap.touchSensor.get("subSensorRight");
+
+        // Color Sensors
+        intakeSensor = hwMap.colorSensor.get("intakeSensor");
+        outtakeSensor = hwMap.colorSensor.get("outtakeSensor");
+        //RGB Indicators
+        rgbLeft = hwMap.servo.get("rgbLeft");
+        rgbRight = hwMap.servo.get("rgbRight");
+
+    }
+    public int intakeSensorRed()
+    {
+        return intakeSensor.red();
+    }
+    public int intakeSensorBlue()
+    {
+        return intakeSensor.blue();
+    }
+    public int intakeSensorGreen()
+    {
+        return intakeSensor.green();
+    }
+    public void setRgb()
+    {
+        if (Objects.equals(intakeSensorColor(), "red"))
+        {
+            rgbLeft.setPosition(.61);
+            rgbRight.setPosition(.61);
+
+        }else if(Objects.equals(intakeSensorColor(), "blue"))
+        {
+            rgbLeft.setPosition(.87);
+            rgbRight.setPosition(.87);
+        }else if(Objects.equals(intakeSensorColor(), "yellow"))
+        {
+            rgbLeft.setPosition(.69);
+            rgbRight.setPosition(.69);
+        }else
+        {
+            rgbLeft.setPosition(.93);
+            rgbRight.setPosition(.93);
+        }
+    }
+    public String intakeSensorColor()
+    {
+
+        if (intakeSensor.red() >400&&intakeSensor.green()<400) {
+            return "red";
+        }
+        else if (intakeSensor.red() > 400 && intakeSensor.green() > 400) {
+            return "yellow";
+        }
+        else if (intakeSensor.blue() > 400) {
+            return "blue";
+        }
+        else {
+            return "none";
+        }
+    }
+    public String outtakeSensorColor()
+    {
+        if (outtakeSensor.red() >400&&outtakeSensor.green()<400) {
+            return "red";
+        }
+        else if (outtakeSensor.red() > 400 && outtakeSensor.green() > 400) {
+            return "yellow";
+        }
+        else if (outtakeSensor.blue() > 400) {
+            return "blue";
+        }
+        else {
+            return "none";
+        }
     }
     public void setLimelightPipeline(int pipeline) {
         limelight.pipelineSwitch(pipeline);
+    }
+    public void setRGBColor(int Color)
+    {
+
     }
 
     public void setintakeSlidesPower(double power) {
@@ -117,66 +232,88 @@ public class Rupert {
     }
 
     public void StartingPosition() {
-        setIntakeClawPos(.3);
+        setIntakeClawPos(.37);
         setIntakeDiffRightPos(1);
         setIntakeDiffLeftPos(0);
         setIntakeRotatePos(1);
         setOuttakeClawPos(.4);
-        setOuttakeRotatePos(0);
-        setOuttakev4bPos(0);
+        setOuttakeRotatePos(.16);
+        setOuttakev4bPos(.7);
+        setOuttakeRightSlidesPos(0);
+        setOuttakeSlidesLeftPos(0);
     }
 
     public void GrabbingSamples90() {
         setIntakeRotatePos(.3);
         setIntakeClawPos(0);
-        setIntakeDiffLeftPos(.8);
-        setIntakeDiffRightPos(.2);
+        setIntakeDiffLeftPos(.7);
+        setIntakeDiffRightPos(.3);
     }
 
     public void GrabbingSamples180() {
         setIntakeRotatePos(.3);
         setIntakeClawPos(0);
         delay(.4);
-        setIntakeDiffLeftPos(.4);
-        setIntakeDiffRightPos(.6);
+        setIntakeDiffLeftPos(.9);
+        setIntakeDiffRightPos(.5);
     }
 
     public void GrabbingSamples() {
         setIntakeRotatePos(.1);
         delay(.4);
         setIntakeClawPos(.4);
+        StartingPosition();
     }
+    public void observationZone()
+        {
+           setIntakeRotatePos(.1);
+           delay(.4);
+           setIntakeClawPos(0);
+           delay(.4);
+           StartingPosition();
+        }
 
     public void ScoringSamples() {
-        setOuttakeClawPos(.1);
+        setOuttakeClawPos(.2);
         delay(.2);
         setIntakeClawPos(0);
         delay(.3);
-        setOuttakeSlidesLeftPos(2000);
-        setOuttakeRightSlidesPos(2000);
+        setOuttakeSlidesLeftPos(2800);
+        setOuttakeRightSlidesPos(2800);
         delay(.5);
-        setOuttakeRotatePos(1);
-        setOuttakev4bPos(1);
+        setOuttakeRotatePos(.6);
+        setOuttakev4bPos(0);
     }
 
-    public void DroppingSamples() {
-        setOuttakeClawPos(0);
+    public void ScoringSpecimens() {
+        setOuttakeClawPos(.2);
+        delay(.2);
+        setIntakeClawPos(0);
         delay(.3);
-        setOuttakeRotatePos(0);
+        setOuttakeSlidesLeftPos(525);
+        setOuttakeRightSlidesPos(525);
+        delay(.5);
+        setOuttakeRotatePos(.8);
         setOuttakev4bPos(0);
+    }
+    public void DroppingSpecimens()
+    {
+
+        setOuttakeClawPos(.4);
+    }
+    public void DroppingSamples() {
+        setOuttakeClawPos(.4);
+        delay(.3);
+        setOuttakeClawPos(.4);
+        setOuttakeRotatePos(0);
+        setOuttakev4bPos(.7);
         delay(.2);
         setOuttakeSlidesLeftPos(0);
         setOuttakeRightSlidesPos(0);
     }
 
     public void HangingUp() {
-        setIntakeClawPos(.3);
-        setIntakeDiffRightPos(1);
-        setIntakeDiffLeftPos(0);
-        setIntakeRotatePos(1);
-        setOuttakeClawPos(0);
-        setOuttakeRotatePos(0);
-        setOuttakev4bPos(0);
+        StartingPosition();
         setOuttakeSlidesLeftPos(1500);
         setOuttakeRightSlidesPos(1500);
     }
@@ -184,7 +321,34 @@ public class Rupert {
     public void HangingDown() {
         setOuttakeSlidesLeftPos(0);
         setOuttakeRightSlidesPos(0);
-        setintakeSlidesPower(-.1);
+    }
+    public void autoRetracting(int colorChoice)
+    {
+        if(colorChoice==1)
+        {
+            if((intakeSensorColor()=="red")&&(outtakeSensorColor()=="none")&&(intakeRotate.getPosition()>.9)){
+                GrabbingSamples();
+                delay(.5);
+                setintakeSlidesPower(-1);
+            } else if ((intakeSensorColor()=="red")&&(outtakeSensorColor()=="red")) {
+                setintakeSlidesPower(0);
+            }
+        }else if(colorChoice==2){
+            if((intakeSensorColor()=="yellow")&&(outtakeSensorColor()=="none")&&(intakeRotate.getPosition()>.9)){
+                GrabbingSamples();
+                delay(.5);
+                setintakeSlidesPower(-1);
+
+            } else if (intakeSensorColor()=="yellow"&&(outtakeSensorColor()=="yellow")) {
+                setintakeSlidesPower(0);
+            }
+        }else if(colorChoice==3){
+            if((intakeSensorColor()=="blue")&&(outtakeSensorColor()=="none")&&(intakeRotate.getPosition()>.9)){
+                setintakeSlidesPower(-1);
+            }else if (intakeSensorColor()=="blue"&&(outtakeSensorColor()=="blue")) {
+                setintakeSlidesPower(0);
+            }
+        }
     }
     public void setLimelight(int pipeline) {
         limelight.pipelineSwitch(pipeline);
