@@ -59,9 +59,7 @@ public class Driving extends LinearOpMode {
                 }
                 if (colorSearch == 1) {
                     if (gamepad1.y) {
-                        if (rup.intakeSensorColor() == "red") {
-                            rup.GrabbingSamples();
-                        } else if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
+                       if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
                             rup.GrabbingSamples90();
                         }
                         if (rup.intakeSensorColor() == "red" && rup.outtakeSensorColor() == "red") {
@@ -79,9 +77,7 @@ public class Driving extends LinearOpMode {
                 if (colorSearch == 2) {
                        if(gamepad1.y)
                        {
-                           if(rup.intakeSensorColor()=="blue"){
-                               rup.GrabbingSamples();
-                           }else if(rup.intakeSensorColor()=="yellow"||rup.intakeSensorColor()=="red"){
+                           if(rup.intakeSensorColor()=="yellow"||rup.intakeSensorColor()=="red"){
                                rup.GrabbingSamples90();
                            }
                        }
@@ -100,9 +96,7 @@ public class Driving extends LinearOpMode {
                     }
                     if (colorSearch == 3) {
                         if(gamepad1.y) {
-                            if (rup.intakeSensorColor() == "yellow"){
-                                rup.GrabbingSamples();
-                            }else if(rup.intakeSensorColor()=="red"||rup.intakeSensorColor()=="blue"){
+                           if(rup.intakeSensorColor()=="red"||rup.intakeSensorColor()=="blue"){
                                 rup.GrabbingSamples90();
                             }
                         }

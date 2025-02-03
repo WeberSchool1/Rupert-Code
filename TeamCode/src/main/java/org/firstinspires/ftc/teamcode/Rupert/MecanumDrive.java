@@ -58,19 +58,19 @@ import java.util.List;
 public final class MecanumDrive {
     public static class Params {
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.UP;
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
-                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT;
+                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD;
 
         // drive model parameters
-        public double inPerTick = 1;
-        public double lateralInPerTick = inPerTick;
-        public double trackWidthTicks = 0;
+        public double inPerTick = 0.001699502738;
+        public double lateralInPerTick = 0.0006054316347615098;
+        public double trackWidthTicks = 7160.716861430526;
 
         // feedforward parameters (in tick units)
-        public double kS = 0;
-        public double kV = 0;
-        public double kA = 0;
+        public double kS = 1.3029819619207808;
+        public double kV = 0.00036922764837302397;
+        public double kA = .00017;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -138,7 +138,6 @@ public final class MecanumDrive {
 
             imu = lazyImu.get();
 
-           rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         }
 
         @Override
