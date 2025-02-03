@@ -27,7 +27,7 @@ public class Driving extends LinearOpMode {
             rup.setIntakeRotatePos(1);
             rup.StartingPosition();
             rup.setRgb();
-            int colorSearch=0;
+            int colorSearch = 0;
             waitForStart();
             while (opModeIsActive()) {
                 drive.setDrivePowers(new PoseVelocity2d(
@@ -36,140 +36,127 @@ public class Driving extends LinearOpMode {
                                 -gamepad1.right_stick_x),
                         -gamepad1.left_stick_x));
                 //Manual Mode
-                        if (gamepad1.a) {
-                            rup.StartingPosition();
-                        }
-                        if (gamepad1.b) {
+                if (gamepad1.a) {
+                    rup.StartingPosition();
+                }
+                if (gamepad1.b) {
+                    rup.GrabbingSamples90();
+                }
+                if (gamepad1.x) {
+                    rup.GrabbingSamples180();
+                }
+                if (gamepad1.dpad_up) {
+                    colorSearch = 0;
+                }
+                if (gamepad1.dpad_right) {
+                    colorSearch = 1;
+                }
+                if (gamepad1.dpad_left) {
+                    colorSearch = 2;
+                }
+                if (gamepad1.dpad_down) {
+                    colorSearch = 3;
+                }
+                if (colorSearch == 1) {
+                    if (gamepad1.y) {
+                        if (rup.intakeSensorColor() == "red") {
+                            rup.GrabbingSamples();
+                        } else if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
                             rup.GrabbingSamples90();
                         }
-                        if (gamepad1.x) {
-                            rup.GrabbingSamples180();
-                        }
-                        if (gamepad1.y) {
-                            rup.GrabbingSamples();
-                        }
-                        if(gamepad1.dpad_right)
-                        {
-                            colorSearch=1;
-                        }
-                        if(gamepad1.dpad_left){
-                            colorSearch=2;
-                        }
-                        if(gamepad1.dpad_down){
-                            colorSearch=3;
-                        }
-                        if(colorSearch==1){
-                            if(rup.intakeSensorColor()=="red"&&rup.outtakeSensorColor()=="none")
-                            {
-                                rup.StartingPosition();
-                                rup.delay(.1);
-                                while(rup.intakeSensorColor()=="red"&&rup.outtakeSensorColor()=="none") {
-                                    rup.setintakeSlidesPower(-1);
-                                }
-                            }else if(rup.intakeSensorColor()=="red"&&rup.outtakeSensorColor()=="red"){
-                                rup.setintakeSlidesPower(0);
-                                if(gamepad2.dpad_right)
-                                {
-                                    rup.observationZone();
-                                }
-                                if(gamepad2.dpad_up)
-                                {
-                                    rup.ScoringSpecimens();
-                                }
-                            }else if((rup.intakeSensorColor()=="yellow")|| rup.intakeSensorColor()=="blue"){
-                                rup.GrabbingSamples90();
+                        if (rup.intakeSensorColor() == "red" && rup.outtakeSensorColor() == "red") {
+                            if (gamepad2.dpad_right) {
+                                rup.observationZone();
                             }
-                        }
-                        if(colorSearch==2)
-                        {
-                            if(rup.intakeSensorColor()=="blue"&&rup.outtakeSensorColor()=="none")
-                            {
-                                rup.StartingPosition();
-                                rup.delay(.1);
-                                while(rup.intakeSensorColor()=="blue"&&rup.outtakeSensorColor()=="none") {
-                                    rup.setintakeSlidesPower(-1);
-                                }
-
-                            }else if(rup.intakeSensorColor()=="blue"&&rup.outtakeSensorColor()=="blue"){
-                                rup.setintakeSlidesPower(0);
-                                rup.ScoringSamples();
-                                if(gamepad2.dpad_right)
-                                {
-                                    rup.observationZone();
-                                }
-                                if(gamepad2.dpad_up)
-                                {
-                                    rup.ScoringSpecimens();
-                                }
-                            }else if(rup.intakeSensorColor()=="yellow"||rup.intakeSensorColor()=="blue")
-                            {
-                                rup.GrabbingSamples90();
+                            if (gamepad2.dpad_up) {
+                                rup.ScoringSpecimens();
                             }
+                        } else if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
+                            rup.GrabbingSamples90();
                         }
-                        if(colorSearch==3)
-                        {
-                            if(rup.intakeSensorColor()=="yellow"&&rup.outtakeSensorColor()=="none"){
-                                rup.StartingPosition();
-                                rup.delay(.1);
-                                while(rup.intakeSensorColor()=="yellow"&&rup.outtakeSensorColor()=="none") {
-                                    rup.setintakeSlidesPower(-1);
-                                }
-
-
-                            }else if(rup.intakeSensorColor()=="yellow"&&rup.outtakeSensorColor()=="yellow")
-                            {
-                                rup.setintakeSlidesPower(0);
-                                rup.ScoringSamples();
-                            } else if (rup.intakeSensorColor()=="red"||rup.intakeSensorColor()=="blue") {
-                                rup.GrabbingSamples90();
-                            }
-                        }
-                        if (gamepad1.left_bumper) {
-                            rup.setintakeSlidesPower(-1);
-                        } else if (gamepad1.right_bumper) {
-                            rup.setintakeSlidesPower(1);
-                        } else {
-                            rup.setintakeSlidesPower(0);
-                        }
-
-                        if(gamepad2.y)
-                        {
-                            rup.DroppingSamples();
-                        }
-                        if(gamepad2.dpad_down)
-                        {
-                            rup.DroppingSpecimens();
-                        }
-
-                        if (gamepad2.right_stick_button) {
-                            rup.HangingUp();
-                        }
-                        if (gamepad2.left_stick_button) {
-                            rup.HangingDown();
-                            while(opModeIsActive()){
-                                rup.setintakeSlidesPower(-1);
-                                if(gamepad2.options){
-                                    break;
-                                }
-                            }
-                        }
-                        rup.setRgb();
-                        telemetry.addData("Intake Sample", rup.intakeSensorColor());
-                        telemetry.addData("Outtake Sample", rup.outtakeSensorColor());
-                        telemetry.addData("Green", rup.intakeSensorGreen());
-                        telemetry.addData("Red", rup.intakeSensorRed());
-                        telemetry.addData("Blue", rup.intakeSensorBlue());
-                        telemetry.update();
-
-
                     }
                 }
+                if (colorSearch == 2) {
+                       if(gamepad1.y)
+                       {
+                           if(rup.intakeSensorColor()=="blue"){
+                               rup.GrabbingSamples();
+                           }else if(rup.intakeSensorColor()=="yellow"||rup.intakeSensorColor()=="red"){
+                               rup.GrabbingSamples90();
+                           }
+                       }
+
+                        if (rup.intakeSensorColor() == "blue" && rup.outtakeSensorColor() == "blue") {
+                            rup.setintakeSlidesPower(0);
+                            if (gamepad2.dpad_right) {
+                                rup.observationZone();
+                            }
+                            if (gamepad2.dpad_up) {
+                                rup.ScoringSpecimens();
+                            }
+                        } else if (rup.intakeSensorColor() == "yellow" || rup.intakeSensorColor() == "blue") {
+                            rup.GrabbingSamples90();
+                        }
+                    }
+                    if (colorSearch == 3) {
+                        if(gamepad1.y) {
+                            if (rup.intakeSensorColor() == "yellow"){
+                                rup.GrabbingSamples();
+                            }else if(rup.intakeSensorColor()=="red"||rup.intakeSensorColor()=="blue"){
+                                rup.GrabbingSamples90();
+                            }
+                        }
+                        if (rup.intakeSensorColor() == "yellow" && rup.outtakeSensorColor() == "yellow") {
+                            rup.ScoringSamples();
+                        } else if (rup.intakeSensorColor() == "red" || rup.intakeSensorColor() == "blue") {
+                            rup.GrabbingSamples90();
+                        }
+                    }
+                    if (gamepad1.left_bumper) {
+                        rup.setintakeSlidesPower(-1);
+                    } else if (gamepad1.right_bumper) {
+                        rup.setintakeSlidesPower(1);
+                    } else {
+                        rup.setintakeSlidesPower(0);
+                    }
+
+                    if (gamepad2.y) {
+                        rup.DroppingSamples();
+                    }
+                    if (gamepad2.dpad_down) {
+                        rup.DroppingSpecimens();
+                    }
+
+                    if (gamepad2.right_stick_button) {
+                        rup.HangingUp();
+                    }
+                    if (gamepad2.left_stick_button) {
+                        rup.HangingDown();
+                        while (opModeIsActive()) {
+                            rup.setintakeSlidesPower(-1);
+                            if (gamepad2.options) {
+                                break;
+                            }
+                        }
+                    }
+                    rup.setRgb();
+                    telemetry.addData("Intake Sample", rup.intakeSensorColor());
+                    telemetry.addData("Outtake Sample", rup.outtakeSensorColor());
+                    telemetry.addData("Green", rup.intakeSensorGreen());
+                    telemetry.addData("Red", rup.intakeSensorRed());
+                    telemetry.addData("Blue", rup.intakeSensorBlue());
+                    telemetry.update();
 
 
                 }
-
-
             }
+
+
+        }
+
+
+    }
+
 
 
 

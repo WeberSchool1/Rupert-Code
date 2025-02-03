@@ -135,17 +135,17 @@ public class Rupert {
     {
         if (Objects.equals(intakeSensorColor(), "red"))
         {
-            rgbLeft.setPosition(.61);
-            rgbRight.setPosition(.61);
+            rgbLeft.setPosition(.279);
+            rgbRight.setPosition(.279);
 
         }else if(Objects.equals(intakeSensorColor(), "blue"))
         {
-            rgbLeft.setPosition(.87);
-            rgbRight.setPosition(.87);
+            rgbLeft.setPosition(.611);
+            rgbRight.setPosition(.611);
         }else if(Objects.equals(intakeSensorColor(), "yellow"))
         {
-            rgbLeft.setPosition(.69);
-            rgbRight.setPosition(.69);
+            rgbLeft.setPosition(.388);
+            rgbRight.setPosition(.388);
         }else
         {
             rgbLeft.setPosition(.93);
@@ -155,13 +155,13 @@ public class Rupert {
     public String intakeSensorColor()
     {
 
-        if (intakeSensor.red() >400&&intakeSensor.green()<400) {
+        if (intakeSensor.red() >1000&&intakeSensor.green()<1200&& intakeSensor.blue()<600) {
             return "red";
         }
-        else if (intakeSensor.red() > 400 && intakeSensor.green() > 400) {
+        else if (intakeSensor.red() > 1200 && intakeSensor.green() > 1200&& intakeSensor.blue()<1500) {
             return "yellow";
         }
-        else if (intakeSensor.blue() > 400) {
+        else if (intakeSensor.blue() > 1000&& intakeSensor.green()<1200&& intakeSensor.red()<800) {
             return "blue";
         }
         else {
@@ -170,13 +170,13 @@ public class Rupert {
     }
     public String outtakeSensorColor()
     {
-        if (outtakeSensor.red() >400&&outtakeSensor.green()<400) {
+        if (outtakeSensor.red() >1000&&outtakeSensor.green()<1200&& outtakeSensor.blue()<600) {
             return "red";
         }
-        else if (outtakeSensor.red() > 400 && outtakeSensor.green() > 400) {
+        else if (outtakeSensor.red() > 1200 && outtakeSensor.green() > 1200&& outtakeSensor.blue()<1500) {
             return "yellow";
         }
-        else if (outtakeSensor.blue() > 400) {
+        else if (outtakeSensor.blue() > 1000&& outtakeSensor.green()<1200&& outtakeSensor.red()<800) {
             return "blue";
         }
         else {
@@ -185,10 +185,6 @@ public class Rupert {
     }
     public void setLimelightPipeline(int pipeline) {
         limelight.pipelineSwitch(pipeline);
-    }
-    public void setRGBColor(int Color)
-    {
-
     }
 
     public void setintakeSlidesPower(double power) {
@@ -235,7 +231,7 @@ public class Rupert {
         setIntakeClawPos(.37);
         setIntakeDiffRightPos(1);
         setIntakeDiffLeftPos(0);
-        setIntakeRotatePos(1);
+        setIntakeRotatePos(.9);
         setOuttakeClawPos(.4);
         setOuttakeRotatePos(.16);
         setOuttakev4bPos(.7);
@@ -260,7 +256,7 @@ public class Rupert {
 
     public void GrabbingSamples() {
         setIntakeRotatePos(.1);
-        delay(.4);
+        delay(.2);
         setIntakeClawPos(.4);
         StartingPosition();
     }
@@ -321,34 +317,6 @@ public class Rupert {
     public void HangingDown() {
         setOuttakeSlidesLeftPos(0);
         setOuttakeRightSlidesPos(0);
-    }
-    public void autoRetracting(int colorChoice)
-    {
-        if(colorChoice==1)
-        {
-            if((intakeSensorColor()=="red")&&(outtakeSensorColor()=="none")&&(intakeRotate.getPosition()>.9)){
-                GrabbingSamples();
-                delay(.5);
-                setintakeSlidesPower(-1);
-            } else if ((intakeSensorColor()=="red")&&(outtakeSensorColor()=="red")) {
-                setintakeSlidesPower(0);
-            }
-        }else if(colorChoice==2){
-            if((intakeSensorColor()=="yellow")&&(outtakeSensorColor()=="none")&&(intakeRotate.getPosition()>.9)){
-                GrabbingSamples();
-                delay(.5);
-                setintakeSlidesPower(-1);
-
-            } else if (intakeSensorColor()=="yellow"&&(outtakeSensorColor()=="yellow")) {
-                setintakeSlidesPower(0);
-            }
-        }else if(colorChoice==3){
-            if((intakeSensorColor()=="blue")&&(outtakeSensorColor()=="none")&&(intakeRotate.getPosition()>.9)){
-                setintakeSlidesPower(-1);
-            }else if (intakeSensorColor()=="blue"&&(outtakeSensorColor()=="blue")) {
-                setintakeSlidesPower(0);
-            }
-        }
     }
     public void setLimelight(int pipeline) {
         limelight.pipelineSwitch(pipeline);
