@@ -45,6 +45,10 @@ public class Driving extends LinearOpMode {
                 if (gamepad1.x) {
                     rup.GrabbingSamples180();
                 }
+                if(gamepad1.y)
+                {
+                    rup.GrabbingSamples();
+                }
                 if (gamepad1.dpad_up) {
                     colorSearch = 0;
                 }
