@@ -231,7 +231,7 @@ public class Rupert {
         setIntakeClawPos(.37);
         setIntakeDiffRightPos(1);
         setIntakeDiffLeftPos(0);
-        setIntakeRotatePos(.9);
+        setIntakeRotatePos(1);
         setOuttakeClawPos(.4);
         setOuttakeRotatePos(.16);
         setOuttakev4bPos(.7);
