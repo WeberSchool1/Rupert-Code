@@ -158,10 +158,10 @@ public class Rupert {
         if (intakeSensor.red() >1000&&intakeSensor.green()<1200&& intakeSensor.blue()<600) {
             return "red";
         }
-        else if (intakeSensor.red() > 1200 && intakeSensor.green() > 1200&& intakeSensor.blue()<1500) {
+        else if (intakeSensor.red() > 1200 && intakeSensor.green() > 1500&& intakeSensor.blue()<1500) {
             return "yellow";
         }
-        else if (intakeSensor.blue() > 1000&& intakeSensor.green()<1200&& intakeSensor.red()<800) {
+        else if (intakeSensor.blue() > 800&& intakeSensor.green()<1200&& intakeSensor.red()<800) {
             return "blue";
         }
         else {
