@@ -336,6 +336,16 @@ public class Rupert {
         setOuttakeRightSlidesPos(0);
         setOuttakeSlidesLeftPos(0);
     }
+    public void AutoObservationDrop()
+    {
+        setOuttakeClawPos(.2);
+        delay(.2);
+        setIntakeClawPos(0);
+        setOuttakeRotatePos(1);
+        setOuttakev4bPos(0);
+        delay(.5);
+        setOuttakeClawPos(.4);
+    }
     public void setLimelight(int pipeline) {
         limelight.pipelineSwitch(pipeline);
     }
