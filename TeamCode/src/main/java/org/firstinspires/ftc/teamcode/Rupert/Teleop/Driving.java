@@ -45,8 +45,7 @@ public class Driving extends LinearOpMode {
                 if (gamepad1.x) {
                     rup.GrabbingSamples180();
                 }
-                if(gamepad1.y)
-                {
+                if (gamepad1.y) {
                     rup.GrabbingSamples();
                 }
                 if (gamepad1.dpad_up) {
@@ -63,7 +62,7 @@ public class Driving extends LinearOpMode {
                 }
                 if (colorSearch == 1) {
                     if (gamepad1.y) {
-                       if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
+                        if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
                             rup.GrabbingSamples90();
                         }
                         if (rup.intakeSensorColor() == "red" && rup.outtakeSensorColor() == "red") {
@@ -79,43 +78,51 @@ public class Driving extends LinearOpMode {
                     }
                 }
                 if (colorSearch == 2) {
-                       if(gamepad1.y)
-                       {
-                           if(rup.intakeSensorColor()=="yellow"||rup.intakeSensorColor()=="red"){
-                               rup.GrabbingSamples90();
-                           }
-                       }
+                    if (gamepad1.y) {
+                        if (rup.intakeSensorColor() == "yellow" || rup.intakeSensorColor() == "red") {
+                            rup.GrabbingSamples90();
+                        }
+                    }
 
-                        if (rup.intakeSensorColor() == "blue" && rup.outtakeSensorColor() == "blue") {
-                            rup.setintakeSlidesPower(0);
-                            if (gamepad2.dpad_right) {
-                                rup.observationZone();
-                            }
-                            if (gamepad2.dpad_up) {
-                                rup.ScoringSpecimens();
-                            }
-                        } else if (rup.intakeSensorColor() == "yellow" || rup.intakeSensorColor() == "blue") {
+                    if (rup.intakeSensorColor() == "blue" && rup.outtakeSensorColor() == "blue") {
+                        if (gamepad2.dpad_right) {
+                            rup.observationZone();
+                        }
+                        if (gamepad2.dpad_up) {
+                            rup.ScoringSpecimens();
+                        }
+                    } else if (rup.intakeSensorColor() == "yellow" || rup.intakeSensorColor() == "blue") {
+                        rup.GrabbingSamples90();
+                    }
+                }
+                if (colorSearch == 3) {
+                    if (gamepad1.y) {
+                        if (rup.intakeSensorColor() == "red" || rup.intakeSensorColor() == "blue") {
                             rup.GrabbingSamples90();
                         }
                     }
-                    if (colorSearch == 3) {
-                        if(gamepad1.y) {
-                           if(rup.intakeSensorColor()=="red"||rup.intakeSensorColor()=="blue"){
-                                rup.GrabbingSamples90();
-                            }
-                        }
-                        if (rup.intakeSensorColor() == "yellow" && rup.outtakeSensorColor() == "yellow") {
-                            rup.ScoringSamples();
-                        } else if (rup.intakeSensorColor() == "red" || rup.intakeSensorColor() == "blue") {
-                            rup.GrabbingSamples90();
-                        }
+                    if (rup.intakeSensorColor() == "yellow" && rup.outtakeSensorColor() == "yellow") {
+                        rup.ScoringSamples();
+                    } else if (rup.intakeSensorColor() == "red" || rup.intakeSensorColor() == "blue") {
+                        rup.GrabbingSamples90();
                     }
-                    if (gamepad1.left_bumper) {
-                        rup.setintakeSlidesPower(-1);
-                    } else if (gamepad1.right_bumper) {
-                        rup.setintakeSlidesPower(1);
-                    } else {
-                        rup.setintakeSlidesPower(0);
+                }
+                if (gamepad1.left_bumper) {
+                    rup.setintakeSlidesPower(-1);
+                } else if (gamepad1.right_bumper) {
+                    rup.setintakeSlidesPower(1);
+                } else {
+                    rup.setintakeSlidesPower(0);
+                }
+                if (gamepad2.dpad_right) {
+                    rup.observationZone();
+                }
+                if (gamepad2.dpad_up) {
+                    rup.ScoringSpecimens();
+                }
+                    if(gamepad2.b)
+                    {
+                        rup.ScoringSamples();
                     }
 
                     if (gamepad2.y) {
@@ -125,18 +132,20 @@ public class Driving extends LinearOpMode {
                         rup.DroppingSpecimens();
                     }
 
-                    if (gamepad2.right_stick_button) {
+                    if (gamepad2.right_bumper&&gamepad2.left_bumper) {
                         rup.HangingUp();
                     }
-                    if (gamepad2.left_stick_button) {
-                        rup.HangingDown();
-                        while (opModeIsActive()) {
-                            rup.setintakeSlidesPower(-1);
-                            if (gamepad2.options) {
-                                break;
+
+
+                        if (gamepad2.left_stick_button && gamepad2.right_stick_button) {
+                            rup.HangingDown();
+                            while (opModeIsActive()) {
+                                rup.setintakeSlidesPower(-1);
+                                if (gamepad2.options) {
+                                    break;
+                                }
                             }
                         }
-                    }
                     rup.setRgb();
                     telemetry.addData("Intake Sample", rup.intakeSensorColor());
                     telemetry.addData("Outtake Sample", rup.outtakeSensorColor());
@@ -146,7 +155,6 @@ public class Driving extends LinearOpMode {
                     telemetry.update();
 
 
-                }
             }
 
 
@@ -154,6 +162,7 @@ public class Driving extends LinearOpMode {
 
 
     }
+}
 
 
 

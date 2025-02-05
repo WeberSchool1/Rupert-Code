@@ -155,13 +155,13 @@ public class Rupert {
     public String intakeSensorColor()
     {
 
-        if (intakeSensor.red() >1000&&intakeSensor.green()<1200&& intakeSensor.blue()<600) {
+        if (intakeSensor.red() >1000&&intakeSensor.green()<1400&& intakeSensor.blue()<600) {
             return "red";
         }
         else if (intakeSensor.red() > 1200 && intakeSensor.green() > 1500&& intakeSensor.blue()<1500) {
             return "yellow";
         }
-        else if (intakeSensor.blue() > 800&& intakeSensor.green()<1200&& intakeSensor.red()<800) {
+        else if (intakeSensor.blue() > 800&& intakeSensor.green()<1500&& intakeSensor.red()<800) {
             return "blue";
         }
         else {
@@ -173,7 +173,7 @@ public class Rupert {
         if (outtakeSensor.red() >1000&&outtakeSensor.green()<1200&& outtakeSensor.blue()<600) {
             return "red";
         }
-        else if (outtakeSensor.red() > 1200 && outtakeSensor.green() > 1200&& outtakeSensor.blue()<1500) {
+        else if (outtakeSensor.red() > 400 && outtakeSensor.green() > 400&& outtakeSensor.blue()<1500) {
             return "yellow";
         }
         else if (outtakeSensor.blue() > 1000&& outtakeSensor.green()<1200&& outtakeSensor.red()<800) {
@@ -226,7 +226,7 @@ public class Rupert {
     public void setOuttakev4bPos(double position) {
         outtakev4b.setPosition(position);
     }
-
+    //Teleop Methods Start
     public void StartingPosition() {
         setIntakeClawPos(.37);
         setIntakeDiffRightPos(1);
@@ -234,7 +234,7 @@ public class Rupert {
         setIntakeRotatePos(1);
         setOuttakeClawPos(.4);
         setOuttakeRotatePos(.16);
-        setOuttakev4bPos(.7);
+        setOuttakev4bPos(.9);
         setOuttakeRightSlidesPos(0);
         setOuttakeSlidesLeftPos(0);
     }
@@ -242,22 +242,23 @@ public class Rupert {
     public void GrabbingSamples90() {
         setIntakeRotatePos(.3);
         setIntakeClawPos(0);
-        setIntakeDiffLeftPos(.7);
-        setIntakeDiffRightPos(.3);
+        setIntakeDiffLeftPos(.8);
+        setIntakeDiffRightPos(.2);
     }
 
     public void GrabbingSamples180() {
         setIntakeRotatePos(.3);
         setIntakeClawPos(0);
         delay(.4);
-        setIntakeDiffLeftPos(.9);
+        setIntakeDiffLeftPos(.5);
         setIntakeDiffRightPos(.5);
     }
 
     public void GrabbingSamples() {
         setIntakeRotatePos(.1);
-        delay(.2);
+        delay(.4);
         setIntakeClawPos(.4);
+        delay(.2);
         StartingPosition();
     }
     public void observationZone()
@@ -278,7 +279,7 @@ public class Rupert {
         setOuttakeRightSlidesPos(2800);
         delay(.5);
         setOuttakeRotatePos(.6);
-        setOuttakev4bPos(0);
+        setOuttakev4bPos(.2);
     }
 
     public void ScoringSpecimens() {
@@ -290,19 +291,22 @@ public class Rupert {
         setOuttakeRightSlidesPos(525);
         delay(.5);
         setOuttakeRotatePos(.8);
-        setOuttakev4bPos(0);
+        setOuttakev4bPos(.3);
     }
     public void DroppingSpecimens()
     {
-
+        setOuttakev4bPos(.1);
+        setOuttakeRotatePos(1);
+        delay(.3);
         setOuttakeClawPos(.4);
+        setOuttakeSlidesLeftPos(500);
     }
     public void DroppingSamples() {
         setOuttakeClawPos(.4);
         delay(.3);
         setOuttakeClawPos(.4);
-        setOuttakeRotatePos(0);
-        setOuttakev4bPos(.7);
+        setOuttakeRotatePos(.16);
+        setOuttakev4bPos(.9);
         delay(.2);
         setOuttakeSlidesLeftPos(0);
         setOuttakeRightSlidesPos(0);
@@ -317,6 +321,20 @@ public class Rupert {
     public void HangingDown() {
         setOuttakeSlidesLeftPos(0);
         setOuttakeRightSlidesPos(0);
+    }
+    //TeleopMethodsEnd
+
+    public void AutoStartingPos()
+    {
+        setIntakeClawPos(0);
+        setIntakeDiffRightPos(1);
+        setIntakeDiffLeftPos(0);
+        setIntakeRotatePos(1);
+        setOuttakeClawPos(0);
+        setOuttakeRotatePos(.16);
+        setOuttakev4bPos(.7);
+        setOuttakeRightSlidesPos(0);
+        setOuttakeSlidesLeftPos(0);
     }
     public void setLimelight(int pipeline) {
         limelight.pipelineSwitch(pipeline);
