@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Rupert;
 
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -12,7 +13,6 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
@@ -227,8 +227,8 @@ public class Rupert {
         outtakev4b.setPosition(position);
     }
     //Teleop Methods Start
-    public void StartingPosition() {
-        setIntakeClawPos(.37);
+    public Action StartingPosition() {
+        setIntakeClawPos(.4);
         setIntakeDiffRightPos(1);
         setIntakeDiffLeftPos(0);
         setIntakeRotatePos(1);
@@ -237,41 +237,46 @@ public class Rupert {
         setOuttakev4bPos(.9);
         setOuttakeRightSlidesPos(0);
         setOuttakeSlidesLeftPos(0);
+        return null;
     }
 
-    public void GrabbingSamples90() {
+    public Action GrabbingSamples90() {
         setIntakeRotatePos(.3);
         setIntakeClawPos(0);
         setIntakeDiffLeftPos(.8);
         setIntakeDiffRightPos(.2);
+        return null;
     }
 
-    public void GrabbingSamples180() {
+    public Action GrabbingSamples180() {
         setIntakeRotatePos(.3);
         setIntakeClawPos(0);
         delay(.4);
-        setIntakeDiffLeftPos(.5);
+        setIntakeDiffLeftPos(1);
         setIntakeDiffRightPos(.5);
+        return null;
     }
 
-    public void GrabbingSamples() {
+    public Action GrabbingSamples() {
         setIntakeRotatePos(.1);
         delay(.4);
         setIntakeClawPos(.4);
         delay(.2);
         StartingPosition();
+        return null;
     }
-    public void observationZone()
+    public Action observationZone()
         {
            setIntakeRotatePos(.1);
            delay(.4);
            setIntakeClawPos(0);
            delay(.4);
            StartingPosition();
+           return null;
         }
 
-    public void ScoringSamples() {
-        setOuttakeClawPos(.2);
+    public Action ScoringSamples() {
+        setOuttakeClawPos(0);
         delay(.2);
         setIntakeClawPos(0);
         delay(.3);
@@ -280,28 +285,32 @@ public class Rupert {
         delay(.5);
         setOuttakeRotatePos(.6);
         setOuttakev4bPos(.2);
+        return null;
     }
 
-    public void ScoringSpecimens() {
-        setOuttakeClawPos(.2);
+    public Action ScoringSpecimens() {
+        setOuttakeClawPos(0);
         delay(.2);
         setIntakeClawPos(0);
         delay(.3);
         setOuttakeSlidesLeftPos(525);
         setOuttakeRightSlidesPos(525);
         delay(.5);
-        setOuttakeRotatePos(.8);
-        setOuttakev4bPos(.3);
+        setOuttakeRotatePos(.86);
+        setOuttakev4bPos(.28);
+        return null;
+
     }
-    public void DroppingSpecimens()
+    public Action DroppingSpecimens()
     {
         setOuttakev4bPos(.1);
         setOuttakeRotatePos(1);
         delay(.3);
         setOuttakeClawPos(.4);
         setOuttakeSlidesLeftPos(500);
+        return null;
     }
-    public void DroppingSamples() {
+    public Action DroppingSamples() {
         setOuttakeClawPos(.4);
         delay(.3);
         setOuttakeClawPos(.4);
@@ -310,21 +319,24 @@ public class Rupert {
         delay(.2);
         setOuttakeSlidesLeftPos(0);
         setOuttakeRightSlidesPos(0);
+        return null;
     }
 
-    public void HangingUp() {
+    public Action HangingUp() {
         StartingPosition();
         setOuttakeSlidesLeftPos(1500);
         setOuttakeRightSlidesPos(1500);
+        return null;
     }
 
-    public void HangingDown() {
+    public Action HangingDown() {
         setOuttakeSlidesLeftPos(0);
         setOuttakeRightSlidesPos(0);
+        return null;
     }
     //TeleopMethodsEnd
 
-    public void AutoStartingPos()
+    public Action AutoStartingPos()
     {
         setIntakeClawPos(0);
         setIntakeDiffRightPos(1);
@@ -335,16 +347,24 @@ public class Rupert {
         setOuttakev4bPos(.7);
         setOuttakeRightSlidesPos(0);
         setOuttakeSlidesLeftPos(0);
+        return null;
     }
-    public void AutoObservationDrop()
+    public Action AutoObservationDrop()
     {
+        setOuttakeRotatePos(.16);
+        delay(.2);
         setOuttakeClawPos(.2);
         delay(.2);
         setIntakeClawPos(0);
         setOuttakeRotatePos(1);
         setOuttakev4bPos(0);
-        delay(.5);
+        delay(.2);
         setOuttakeClawPos(.4);
+        return null;
+    }
+    public void prepForObservationDrop()
+    {
+        setOuttakeRotatePos(.3);
     }
     public void setLimelight(int pipeline) {
         limelight.pipelineSwitch(pipeline);
@@ -361,10 +381,11 @@ public class Rupert {
     {
         return result.getTa();
     }
-    public void delay(double seconds) {
+    public Action delay(double seconds) {
         ElapsedTime timer = new ElapsedTime();
         timer.reset();
         while (timer.seconds() < seconds) {
         }
+        return null;
     }
 }

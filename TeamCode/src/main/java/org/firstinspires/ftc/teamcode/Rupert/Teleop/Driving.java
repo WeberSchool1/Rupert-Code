@@ -48,8 +48,17 @@ public class Driving extends LinearOpMode {
                 if (gamepad1.y) {
                     rup.GrabbingSamples();
                 }
+                if(gamepad1.left_stick_button)
+                {
+                    rup.ScoringSamples();
+                }
+                if(gamepad1.right_stick_button)
+                {
+                    rup.DroppingSamples();
+
+                }
                 if (gamepad1.dpad_up) {
-                    colorSearch = 0;
+                    rup.prepForObservationDrop();
                 }
                 if (gamepad1.dpad_right) {
                     colorSearch = 1;
@@ -60,53 +69,7 @@ public class Driving extends LinearOpMode {
                 if (gamepad1.dpad_down) {
                     colorSearch = 3;
                 }
-                if (colorSearch == 1) {
-                    if (gamepad1.y) {
-                        if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
-                            rup.GrabbingSamples90();
-                        }
-                        if (rup.intakeSensorColor() == "red" && rup.outtakeSensorColor() == "red") {
-                            if (gamepad2.dpad_right) {
-                                rup.observationZone();
-                            }
-                            if (gamepad2.dpad_up) {
-                                rup.ScoringSpecimens();
-                            }
-                        } else if ((rup.intakeSensorColor() == "yellow") || rup.intakeSensorColor() == "blue") {
-                            rup.GrabbingSamples90();
-                        }
-                    }
-                }
-                if (colorSearch == 2) {
-                    if (gamepad1.y) {
-                        if (rup.intakeSensorColor() == "yellow" || rup.intakeSensorColor() == "red") {
-                            rup.GrabbingSamples90();
-                        }
-                    }
 
-                    if (rup.intakeSensorColor() == "blue" && rup.outtakeSensorColor() == "blue") {
-                        if (gamepad2.dpad_right) {
-                            rup.observationZone();
-                        }
-                        if (gamepad2.dpad_up) {
-                            rup.ScoringSpecimens();
-                        }
-                    } else if (rup.intakeSensorColor() == "yellow" || rup.intakeSensorColor() == "blue") {
-                        rup.GrabbingSamples90();
-                    }
-                }
-                if (colorSearch == 3) {
-                    if (gamepad1.y) {
-                        if (rup.intakeSensorColor() == "red" || rup.intakeSensorColor() == "blue") {
-                            rup.GrabbingSamples90();
-                        }
-                    }
-                    if (rup.intakeSensorColor() == "yellow" && rup.outtakeSensorColor() == "yellow") {
-                        rup.ScoringSamples();
-                    } else if (rup.intakeSensorColor() == "red" || rup.intakeSensorColor() == "blue") {
-                        rup.GrabbingSamples90();
-                    }
-                }
                 if (gamepad1.left_bumper) {
                     rup.setintakeSlidesPower(-1);
                 } else if (gamepad1.right_bumper) {

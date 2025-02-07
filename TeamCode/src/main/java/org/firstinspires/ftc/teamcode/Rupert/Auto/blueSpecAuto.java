@@ -13,6 +13,8 @@ import org.firstinspires.ftc.teamcode.Rupert.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Rupert.Rupert;
 import org.firstinspires.ftc.teamcode.tuning.TuningOpModes;
 
+import java.util.Vector;
+
 @Autonomous(name="Blue Spec Auto", group = "Autonomous")
 
 public class blueSpecAuto extends LinearOpMode{
@@ -26,24 +28,54 @@ public class blueSpecAuto extends LinearOpMode{
             rup=new Rupert((hardwareMap));
             rup.AutoStartingPos();
             waitForStart();
-            while(opModeIsActive()){
-                rup.ScoringSpecimens();
-                Action scoring1stSpec = drive.actionBuilder(new Pose2d(0, 0, 0))
-                        .strafeToLinearHeading(new Vector2d(-30, 0), Math.toRadians(0))
-                        .build();
-                Actions.runBlocking(scoring1stSpec);
-                rup.DroppingSpecimens();
-                rup.StartingPosition();
-                Action grabNextSample1 = drive.actionBuilder(new Pose2d(-30, 0, 180))
-                        .strafeToLinearHeading(new Vector2d(-10, 0), Math.toRadians(180))
-                        .strafeToLinearHeading(new Vector2d(-9, 43.5), Math.toRadians(180))
-                        .build();
-                Actions.runBlocking(grabNextSample1);
-                rup.GrabbingSamples90();
-                rup.GrabbingSamples();
-                rup.delay(.8);
+            Action specAuto = drive.actionBuilder(new Pose2d(0, 0, 0))
+                    .afterTime(0, (t)->
+                    {rup.ScoringSpecimens();
+                        return false;})
+                    .strafeToLinearHeading(new Vector2d(-30, 0), Math.toRadians(0))
+                    .afterTime(.5,(t)->
+                    {rup.DroppingSpecimens();
+                        return false;})
+                    .afterTime(1.3, (t)->
+                    {
+                        rup.StartingPosition();
+                        return false;
+                    })
+                    .splineToConstantHeading(new Vector2d(-15, 12), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-15, 29), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-45, 29), Math.toRadians(0))
+                    .afterTime(0, (t)->
+                    {
+                        rup.delay(.2);
+                        return false;
+                    })
+                    .splineToConstantHeading(new Vector2d(-45, 41), Math.toRadians(0))
+                    .afterTime(0, (t)->
+                    {
+                        rup.delay(.5);
+                        return false;
+                    })
 
-                rup.delay(3);
+                    .splineToConstantHeading(new Vector2d(-5, 41), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-45, 40), Math.toRadians(0))
+                    .afterTime(0, (t)->
+                    {
+                        rup.delay(.2);
+                        return false;
+                    })
+                    .splineToConstantHeading(new Vector2d(-45, 45), Math.toRadians(0))
+                    .afterTime(0, (t)->
+                    {
+                        rup.delay(.5);
+                        return false;
+                    })
+                    .splineToConstantHeading(new Vector2d(-5, 45), Math.toRadians(0))
+                    .build();
+            while(opModeIsActive()){
+                Actions.runBlocking(specAuto);
+                rup.delay(4);
+                break;
+
 
 
             }
