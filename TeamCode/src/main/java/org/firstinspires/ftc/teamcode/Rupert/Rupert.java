@@ -234,7 +234,7 @@ public class Rupert {
         setIntakeRotatePos(1);
         setOuttakeClawPos(.4);
         setOuttakeRotatePos(.16);
-        setOuttakev4bPos(.9);
+        setOuttakev4bPos(1);
         setOuttakeRightSlidesPos(0);
         setOuttakeSlidesLeftPos(0);
         return null;
@@ -259,9 +259,9 @@ public class Rupert {
 
     public Action GrabbingSamples() {
         setIntakeRotatePos(.1);
-        delay(.4);
-        setIntakeClawPos(.4);
         delay(.2);
+        setIntakeClawPos(.4);
+        delay(.1);
         StartingPosition();
         return null;
     }
@@ -290,7 +290,7 @@ public class Rupert {
 
     public Action ScoringSpecimens() {
         setOuttakeClawPos(0);
-        delay(.2);
+        delay(.4);
         setIntakeClawPos(0);
         delay(.3);
         setOuttakeSlidesLeftPos(525);
@@ -362,9 +362,27 @@ public class Rupert {
         setOuttakeClawPos(.4);
         return null;
     }
-    public void prepForObservationDrop()
+    public Action AutoScoringSpecimens()
+    {
+        setOuttakeSlidesLeftPos(525);
+        setOuttakeRightSlidesPos(525);
+        setOuttakeRotatePos(.84);
+        setOuttakev4bPos(.28);
+        return null;
+    }
+    public Action AutoScoringSamples()
+    {
+        setOuttakeSlidesLeftPos(2800);
+        setOuttakeRightSlidesPos(2800);
+        delay(2);
+        setOuttakeRotatePos(.6);
+        setOuttakev4bPos(.2);
+        return null;
+    }
+    public Action prepForObservationDrop()
     {
         setOuttakeRotatePos(.3);
+        return null;
     }
     public void setLimelight(int pipeline) {
         limelight.pipelineSwitch(pipeline);
