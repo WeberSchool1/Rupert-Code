@@ -32,7 +32,7 @@ public class Driving extends LinearOpMode {
             while (opModeIsActive()) {
                 drive.setDrivePowers(new PoseVelocity2d(
                         new Vector2d(
-                                -gamepad1.right_stick_y,
+                                gamepad1.right_stick_y,
                                 -gamepad1.right_stick_x),
                         -gamepad1.left_stick_x));
                 //Manual Mode

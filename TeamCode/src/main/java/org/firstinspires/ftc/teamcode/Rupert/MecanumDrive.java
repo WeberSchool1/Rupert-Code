@@ -56,6 +56,9 @@ import java.util.List;
 
 @Config
 public final class MecanumDrive {
+    public void setPoseEstimate(Pose2d pose2d) {
+    }
+
     public static class Params {
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
@@ -70,7 +73,7 @@ public final class MecanumDrive {
         // feedforward parameters (in tick units)
         public double kS = 1.4730899623423725;
         public double kV = 0.00034524077819554145;
-        public double kA = .0001;
+        public double kA = .00008;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -214,8 +217,8 @@ public final class MecanumDrive {
         }
 
         leftFront = hardwareMap.get(DcMotorEx.class, "par0");
-        leftBack = hardwareMap.get(DcMotorEx.class, "perp");
-        rightBack = hardwareMap.get(DcMotorEx.class, "backRight");
+        leftBack = hardwareMap.get(DcMotorEx.class, "backLeft");
+        rightBack = hardwareMap.get(DcMotorEx.class, "perp");
         rightFront = hardwareMap.get(DcMotorEx.class, "par1");
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -223,8 +226,8 @@ public final class MecanumDrive {
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: reverse motor directions if needed
         //   leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
