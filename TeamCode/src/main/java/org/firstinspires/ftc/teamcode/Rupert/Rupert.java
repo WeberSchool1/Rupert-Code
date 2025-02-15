@@ -278,13 +278,13 @@ public class Rupert {
 
     public Action ScoringSamples() {
         setOuttakeClawPos(0);
-        delay(.2);
+        delay(.5);
         setIntakeClawPos(0);
         delay(.3);
         setOuttakeSlidesLeftPos(2800);
         setOuttakeRightSlidesPos(2800);
         delay(.5);
-        setOuttakeRotatePos(.7);
+        setOuttakeRotatePos(.75);
         setOuttakev4bPos(.2);
         return null;
     }
@@ -294,11 +294,11 @@ public class Rupert {
         delay(.4);
         setIntakeClawPos(0);
         delay(.3);
-        setOuttakeSlidesLeftPos(500);
-        setOuttakeRightSlidesPos(500);
+        setOuttakeSlidesLeftPos(425);
+        setOuttakeRightSlidesPos(425);
         delay(.5);
         setOuttakeRotatePos(1);
-        setOuttakev4bPos(.4);
+        setOuttakev4bPos(.5);
         return null;
 
     }
@@ -312,7 +312,7 @@ public class Rupert {
     }
     public Action DroppingSamples() {
         setOuttakeClawPos(.4);
-        delay(.3);
+        delay(.5);
         setOuttakeClawPos(.4);
         setOuttakeRotatePos(.16);
         setOuttakev4bPos(.9);
@@ -324,8 +324,8 @@ public class Rupert {
 
     public Action HangingUp() {
         StartingPosition();
-        setOuttakeSlidesLeftPos(3000);
-        setOuttakeRightSlidesPos(3000);
+        setOuttakeSlidesLeftPos(3500);
+        setOuttakeRightSlidesPos(3500);
         return null;
     }
 
@@ -364,8 +364,8 @@ public class Rupert {
     }
     public Action AutoScoringSpecimens()
     {
-        setOuttakeSlidesLeftPos(500);
-        setOuttakeRightSlidesPos(500);
+        setOuttakeSlidesLeftPos(425);
+        setOuttakeRightSlidesPos(425);
         setOuttakeRotatePos(1);
         setOuttakev4bPos(.5);
         return null;

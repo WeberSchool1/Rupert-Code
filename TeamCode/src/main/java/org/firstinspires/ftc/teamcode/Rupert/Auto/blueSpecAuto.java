@@ -11,13 +11,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
+import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.teamcode.Rupert.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Rupert.Rupert;
 import org.firstinspires.ftc.teamcode.tuning.TuningOpModes;
 
 import java.util.Vector;
 
-@Autonomous(name="Spec Auto", group = "Autonomous")
+@Autonomous(name="Backup Spec Auto", group = "Autonomous")
 
 public class blueSpecAuto extends LinearOpMode{
     @Override
@@ -45,10 +46,12 @@ public class blueSpecAuto extends LinearOpMode{
                         return false;
                     })
                     .splineToConstantHeading(new Vector2d(-8, 0), Math.toRadians(0))
-                    .splineToConstantHeading(new Vector2d(-8, -10), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(-8, -15.4), Math.toRadians(0))
                     .build();
-            Action Push = drive.actionBuilder(new Pose2d(-8, -10, 0))
-                    .strafeToLinearHeading(new Vector2d(-10, -10), Math.toRadians(0))
+            Action Push1= drive.actionBuilder(new Pose2d(-43.5, -15.4, 0))
+                    .splineToConstantHeading(new Vector2d(-43.5, -18), Math.toRadians(0))
+                    .build();
+            Action Push2= drive.actionBuilder(new Pose2d(-43.5, -18, 0))
                             .build();
             waitForStart();
             while(opModeIsActive()){
@@ -57,7 +60,15 @@ public class blueSpecAuto extends LinearOpMode{
                 rup.setintakeSlidesPower(-.5);
                 Actions.runBlocking(Score1);
                 drive.setPoseEstimate(new Pose2d(-8, -10, 0));
-                Actions.runBlocking(Push);
+                drive.setDrivePowers(new PoseVelocity2d(new Vector2d(-1, 0), 0));
+                rup.delay(.65);
+                Actions.runBlocking(Push1);
+                drive.setDrivePowers(new PoseVelocity2d(new Vector2d(1,0), 0));
+                rup.delay(1.4);
+                drive.setDrivePowers(new PoseVelocity2d(new Vector2d(-1, 0), 0));
+                rup.delay(1);
+                Actions.runBlocking(Push2);
+
                 break;
 
 
